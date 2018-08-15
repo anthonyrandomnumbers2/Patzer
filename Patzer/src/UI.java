@@ -11,7 +11,22 @@ public class UI extends JPanel implements MouseListener, MouseMotionListener{
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         Image pieces = new ImageIcon("ChessPieces.png").getImage();
-        g.drawImage(pieces, x, y, this);
+        
+        g.setColor(Color.blue);
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(i%2 ==0 && j%2 != 0){
+                    g.fillRect(i*60,j*60 ,60,60);
+                }else if( i%2 != 0 && j%2 == 0){
+                    g.fillRect(i*60,j*60 ,60,60);
+                }
+                else
+                    g.drawRect(i*60,j*60 ,60,60);
+            }
+        }   
+        //g.drawImage(pieces, 200, 300,40,50, this);
+       //g.drawI
+        
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.*;
 public class Patzer{
     
     
-   /*static String board[][] = {
+   static String board[][] = {
             {"bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"},
             {"bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"}, 
             {" ", " ", " ", " ", " ", " ", " ", " "},
@@ -14,27 +14,30 @@ public class Patzer{
             {"wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"},
             {"wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"}
     };
-   */
-    static String board[][] = {
-            {" ", " ", " ", " ", " ", " ", " ", " "},
+   
+    final static String boardd[][] = {
+            {" ", " ", " ", "bR", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "}, 
-            {" ", " ", " ", " ", "bP", " ", " ", " "},
-            {" ", " ", " ", " ", "wK", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " ", "bK"},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
+            {" ", " ", " ", "wR", " ", "wK", " ", " "},
     };
+    
+   
     
     public static void main(String[] args) {
         //our window
-        //JFrame frame = new JFrame("We got graphics!");
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setSize(500,500);
-        //frame.setVisible(true);
-        //UI user_int = new UI();
-        //frame.add(user_int);
-        
+        /*
+        JFrame frame = new JFrame("We got graphics!");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600,600);
+        frame.setVisible(true);
+        UI user_int = new UI();
+        frame.add(user_int);
+        */
         
         for(int i = 0; i < board.length; i++){
             System.out.println(Arrays.toString(board[i]));
@@ -42,7 +45,30 @@ public class Patzer{
             //an array of String arrays
         }
         System.out.println("--------------------------------------------------------------------------");
-        generateMoves("w", board);
+        
+        Scanner c = new Scanner(System.in);
+        while(true){
+            String move = "";
+            move = AlphaBeta.findDecentMove(board,1);
+            makeMove(move);
+            System.out.println("Move: " + move );
+            for(int i = 0; i < board.length; i++){
+                System.out.println(Arrays.toString(board[i]));
+            }
+            move = (AlphaBeta.findDecentMove(board,-1));
+            makeMove(move);
+            System.out.println("Move: " + move);
+            for(int i = 0; i < board.length; i++){
+                System.out.println(Arrays.toString(board[i]));
+            }
+            String a = c.nextLine();
+            if(a.equals("1")){
+                break;
+            }
+            
+        }
+
+        //generateMoves("w", board);
         System.out.println("--------------------------------------------------------------------------"); 
     }
     
@@ -58,7 +84,7 @@ public class Patzer{
                 if(board[i][j].startsWith(color)){
                     ourPieces.add(board[i][j] + "[" + i + "]" + "[" + j + "]");
                 }
-            }    
+            }
         }
         
         //great we now have an arraylist of all the pieces we have on the board 
@@ -66,7 +92,7 @@ public class Patzer{
         //legal or psuedo legal?
         for(int i = 0; i < ourPieces.size(); i++){
             //we have an array list of all of our pieces and their positions
-            System.out.println(getMoves(ourPieces.get(i)));
+            moveList += getMoves(ourPieces.get(i));
         }
         return moveList;
     }
@@ -75,7 +101,6 @@ public class Patzer{
     //These methods return a String list of all moves that piece can make.
     //see move generation class for format
     public static String getMoves(String currentPiece){
-        System.out.println(currentPiece);
         if(currentPiece.substring(1,2).equals("K")){
             return MoveGeneration.kingMoves(currentPiece, board);
         }
@@ -103,29 +128,38 @@ public class Patzer{
     //given a string encoded move
     //update the board with that move
     public static void makeMove(String move){
-        int oldRank = Integer.parseInt(move.substring(0,1));
-        int oldFile = Integer.parseInt(move.substring(1,2));
-        int newRank = Integer.parseInt(move.substring(2,3));
-        int newFile = Integer.parseInt(move.substring(3,4));
-        board[newRank][newFile] = board[oldRank][oldFile];
-        board[oldRank][oldFile] = " ";     
+        if(!move.equals("")){
+            int oldRank = Integer.parseInt(move.substring(0,1));
+            int oldFile = Integer.parseInt(move.substring(1,2));
+            int newRank = Integer.parseInt(move.substring(2,3));
+            int newFile = Integer.parseInt(move.substring(3,4));
+            //System.out.println(oldRank);
+             //System.out.println(oldFile);
+              //System.out.println(newRank);
+               //System.out.println(newFile);
+            board[newRank][newFile] = board[oldRank][oldFile];
+            board[oldRank][oldFile] = " ";    
+        }
     }
     
     //given the PREVIOUS string encoded move
     //revert the board to before the move happened
     public static void unmakeMove(String move){
-        int oldRank = Integer.parseInt(move.substring(0,1));
-        int oldFile = Integer.parseInt(move.substring(1,2));
-        int newRank = Integer.parseInt(move.substring(2,3));
-        int newFile = Integer.parseInt(move.substring(3,4));
-        //space indicates no capture
-        String capturedPiece = " ";
+        if(!move.equals("")){
+            int oldRank = Integer.parseInt(move.substring(0,1));
+            int oldFile = Integer.parseInt(move.substring(1,2));
+            int newRank = Integer.parseInt(move.substring(2,3));
+            int newFile = Integer.parseInt(move.substring(3,4));
+            
+            //space indicates no capture
+            String capturedPiece = " ";
         
-        //strings longer than 5 end with the captured piece
-        if(move.length() == 6){
-            capturedPiece = move.substring(4);
-        }    
-        board[oldRank][oldFile] = board[newRank][newFile];
-        board[newRank][newFile] = capturedPiece;
+            //strings longer than 5 end with the captured piece
+            if(move.length() == 6){
+                capturedPiece = move.substring(4);
+            }    
+            board[oldRank][oldFile] = board[newRank][newFile];
+            board[newRank][newFile] = capturedPiece;
+        }
     }
 }
