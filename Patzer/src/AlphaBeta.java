@@ -19,17 +19,14 @@ public class AlphaBeta {
        if(player == 1)
            return bestMoveP1;
        else 
-           return bestMoveP2;
-       
-        
+           return bestMoveP2;   
     }
     
     public static int alphaBeta(String[][] currentBoard, int alpha, int beta, int ply, int player){
         //base case
         if(ply == 0){
             int b  = Evaluation.evaluate(currentBoard);
-            return b;
-            
+            return b;    
         }
         
         String color = "w";

@@ -5,12 +5,9 @@ import java.awt.event.*;
 //and tutorial on awt and swing
 public class UI extends JPanel implements MouseListener, MouseMotionListener{
     static int x = 0, y = 0;
-
     @Override
     public void paintComponent(Graphics g){
-        
         super.paintComponent(g);
-        
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         Image pieces = new ImageIcon("ChessPieces.png").getImage();
