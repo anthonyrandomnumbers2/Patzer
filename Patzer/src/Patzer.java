@@ -15,7 +15,7 @@ public class Patzer{
             {"wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"}
     };
    
-    final static String boardd[][] = {
+    final static String tempBoard[][] = {
             {" ", "bK", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "}, 
             {" ", "wK", " ", " ", " ", " ", " ", " "},
@@ -57,17 +57,17 @@ public class Patzer{
             
             
             System.out.println("Move: " + move );
-            //for(int i = 0; i < board.length; i++){
-                //System.out.println(Arrays.toString(board[i]));
-            //}
+            for(int i = 0; i < board.length; i++){
+                System.out.println(Arrays.toString(board[i]));
+            }
             move = (AlphaBeta.findDecentMove(board,-1));
             makeMove(move);
             frame.repaint();
             
             System.out.println("Move: " + move);
-            //for(int i = 0; i < board.length; i++){
-                //System.out.println(Arrays.toString(board[i]));
-            //}
+            for(int i = 0; i < board.length; i++){
+                System.out.println(Arrays.toString(board[i]));
+            }
             
             //if(a.equals("1")){
               //  break;
@@ -168,5 +168,42 @@ public class Patzer{
             board[oldRank][oldFile] = board[newRank][newFile];
             board[newRank][newFile] = capturedPiece;
         }
+    }    
+        public static void tempMakeMove(String move){
+        if(!move.equals("")){
+            int oldRank = Integer.parseInt(move.substring(0,1));
+            int oldFile = Integer.parseInt(move.substring(1,2));
+            int newRank = Integer.parseInt(move.substring(2,3));
+            int newFile = Integer.parseInt(move.substring(3,4));
+            //System.out.println(oldRank);
+             //System.out.println(oldFile);
+              //System.out.println(newRank);
+               //System.out.println(newFile);
+            tempBoard[newRank][newFile] = tempBoard[oldRank][oldFile];
+            tempBoard[oldRank][oldFile] = " ";    
+           
+        }
+    }
+    
+    //given the PREVIOUS string encoded move
+    //revert the board to before the move happened
+    public static void tempUnmakeMove(String move){
+        if(!move.equals("")){
+            int oldRank = Integer.parseInt(move.substring(0,1));
+            int oldFile = Integer.parseInt(move.substring(1,2));
+            int newRank = Integer.parseInt(move.substring(2,3));
+            int newFile = Integer.parseInt(move.substring(3,4));
+            
+            //space indicates no capture
+            String capturedPiece = " ";
+        
+            //strings longer than 5 end with the captured piece
+            if(move.length() == 6){
+                capturedPiece = move.substring(4);
+            }    
+            tempBoard[oldRank][oldFile] = tempBoard[newRank][newFile];
+            tempBoard[newRank][newFile] = capturedPiece;
+        }
+        
     }
 }

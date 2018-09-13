@@ -21,7 +21,7 @@ public class AlphaBeta {
     static String bestMoveP1 = "";
     static String bestMoveP2 = "";
     public static String findDecentMove(String[][] currentBoard,int player){
-       
+       updateTempBoard(currentBoard);
        alphaBeta(currentBoard, -100000, 100000, 6, player);
        if(player == 1)
            return bestMoveP1;
@@ -55,14 +55,14 @@ public class AlphaBeta {
             for(int i = 0; i < splitMoves.length; i++){
                 if(splitMoves.length > 0){
                     move = splitMoves[i];
-                    Patzer.makeMove(move);
+                    Patzer.tempMakeMove(move);
                     int tempScore = minScore;
                     minScore = Math.max(minScore,alphaBeta(currentBoard, alpha, beta, ply - 1, -player));
                     alpha = Math.max(alpha,minScore);
                     if(minScore > tempScore){
                         bestMove = move;
                     }
-                    Patzer.unmakeMove(move);
+                    Patzer.tempUnmakeMove(move);
                     if(alpha >= beta){
                         return minScore;
                     }
@@ -80,14 +80,14 @@ public class AlphaBeta {
             for(int i = 0; i < splitMoves.length; i++){
                 if(splitMoves.length > 0){
                     move = splitMoves[i];
-                    Patzer.makeMove(move);
+                    Patzer.tempMakeMove(move);
                     int tempScore = maxScore;
                     maxScore = Math.min(maxScore,alphaBeta(currentBoard, alpha, beta, ply - 1, -player));
                     beta = Math.min(beta, maxScore);
                     if(maxScore < tempScore){    
                         bestMove = move;
                     }
-                    Patzer.unmakeMove(move);
+                    Patzer.tempUnmakeMove(move);
                     if(alpha >= beta){
                         return maxScore;
                     }
@@ -100,5 +100,13 @@ public class AlphaBeta {
             return maxScore;
         }
        
+    }
+    
+    public static void updateTempBoard(String[][] currentBoard){
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                Patzer.tempBoard[i][j] = currentBoard[i][j];
+            }
+        }
     }
 }
