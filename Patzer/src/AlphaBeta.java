@@ -7,14 +7,7 @@ import java.util.Arrays;
  *
  * @author Anthony
  */
-//here we go.
-//things to think about:
-//what are our paramaters?
-// (node, depth, alpha, beta, sentinal boolean)
-//what are we returning?
-//why does alphabeta work?
-//how does this algorithm fit into our program so far?
-//do not write anything until you can answer these
+
 
 public class AlphaBeta {
     
@@ -22,7 +15,7 @@ public class AlphaBeta {
     static String bestMoveP2 = "";
     public static String findDecentMove(String[][] currentBoard,int player){
        updateTempBoard(currentBoard);
-       alphaBeta(currentBoard, -100000, 100000, 6, player);
+       alphaBeta(Patzer.tempBoard, -100000, 100000, 5, player);
        if(player == 1)
            return bestMoveP1;
        else 
@@ -44,7 +37,7 @@ public class AlphaBeta {
             color = "b";
         }
         
-        String movesForCurrentBoard = Patzer.generateMoves(color, currentBoard);
+        String movesForCurrentBoard = Patzer.generateMoves(color, Patzer.tempBoard);
         String[] splitMoves = movesForCurrentBoard.split("\\|");
         String bestMove = "";
         String move = "";

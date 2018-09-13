@@ -16,14 +16,14 @@ public class Patzer{
     };
    
     final static String tempBoard[][] = {
-            {" ", "bK", " ", " ", " ", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "}, 
-            {" ", "wK", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", "wR", " ", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " ", " "},
     };
     
    
@@ -81,14 +81,14 @@ public class Patzer{
     //returns a string of all the moves one color could make
     //"currentPiece[position] -> currentPiece[newPosition], ..."
     //"wP[6,1] -> wP[7,1], ..."
-    public static String generateMoves(String color,String[][] board){
+    public static String generateMoves(String color,String[][] currentBoard){
         String moveList = "";
         ArrayList<String> ourPieces = new ArrayList<>();
         //The plan is to first loop through the whole board and find all of our pieces
-        for(int i = 0; i < board.length; i++){
+        for(int i = 0; i < currentBoard.length; i++){
             for(int j = 0; j < 8; j++){
-                if(board[i][j].startsWith(color)){
-                    ourPieces.add(board[i][j] + "[" + i + "]" + "[" + j + "]");
+                if(currentBoard[i][j].startsWith(color)){
+                    ourPieces.add(currentBoard[i][j] + "[" + i + "]" + "[" + j + "]");
                 }
             }
         }
@@ -98,7 +98,7 @@ public class Patzer{
         //legal or psuedo legal?
         for(int i = 0; i < ourPieces.size(); i++){
             //we have an array list of all of our pieces and their positions
-            moveList += getMoves(ourPieces.get(i));
+            moveList += getMoves(ourPieces.get(i),currentBoard);
         }
         return moveList;
     }
@@ -106,24 +106,24 @@ public class Patzer{
     //get moves takes a piece(a string) and calls methods from MoveGeneration
     //These methods return a String list of all moves that piece can make.
     //see move generation class for format
-    public static String getMoves(String currentPiece){
+    public static String getMoves(String currentPiece, String[][] currentBoard){
         if(currentPiece.substring(1,2).equals("K")){
-            return MoveGeneration.kingMoves(currentPiece, board);
+            return MoveGeneration.kingMoves(currentPiece, currentBoard);
         }
         if(currentPiece.substring(1,2).equals("N")){
-            return MoveGeneration.knightMoves(currentPiece, board);
+            return MoveGeneration.knightMoves(currentPiece, currentBoard);
         }
         if(currentPiece.substring(1,2).equals("P")){
-            return MoveGeneration.pawnMoves(currentPiece, board);
+            return MoveGeneration.pawnMoves(currentPiece, currentBoard);
         }
         if(currentPiece.substring(1,2).equals("R")){
-            return MoveGeneration.rookMoves(currentPiece, board);
+            return MoveGeneration.rookMoves(currentPiece, currentBoard);
         }
         if(currentPiece.substring(1,2).equals("B")){
-            return MoveGeneration.bishopMoves(currentPiece, board);
+            return MoveGeneration.bishopMoves(currentPiece, currentBoard);
         }
         if(currentPiece.substring(1,2).equals("Q")){
-            return MoveGeneration.queenMoves(currentPiece, board);
+            return MoveGeneration.queenMoves(currentPiece, currentBoard);
         }
         return "";
     }
