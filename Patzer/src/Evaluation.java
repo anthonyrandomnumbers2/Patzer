@@ -78,14 +78,12 @@ public class Evaluation {
         //the king should have a very large value?
         blackScore += (900 * blackQueenCount) + (500 * blackRookCount) + 
                 (300 * blackKnightCount) + (300 * blackBishopCount) + 
-                (100 * blackPawnCount) + (10000 * blackKingCount);
+                (100 * blackPawnCount) + (20000 * blackKingCount);
         
         whiteScore += (900 * whiteQueenCount) + (500 * whiteRookCount) + 
                 (300 * whiteKnightCount) + (300 * whiteBishopCount) + 
-                (100 * whitePawnCount) + (10000 * whiteKingCount);
+                (100 * whitePawnCount) + (20000 * whiteKingCount);
         totalScore += whiteScore - blackScore;
-        
-        
         
         return totalScore;
     }

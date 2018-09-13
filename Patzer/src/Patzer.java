@@ -16,28 +16,27 @@ public class Patzer{
     };
    
     final static String boardd[][] = {
-            {" ", " ", " ", "bR", " ", " ", " ", " "},
+            {" ", "bK", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "}, 
-            {" ", " ", " ", " ", " ", " ", " ", "bK"},
+            {" ", "wK", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
             {" ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", "wR", " ", "wK", " ", " "},
+            {" ", " ", " ", "wR", " ", " ", " ", " "},
     };
     
    
     
     public static void main(String[] args) {
         //our window
-        /*
         JFrame frame = new JFrame("We got graphics!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600,600);
+        frame.setSize(640,640);
         frame.setVisible(true);
         UI user_int = new UI();
         frame.add(user_int);
-        */
+        
         
         for(int i = 0; i < board.length; i++){
             System.out.println(Arrays.toString(board[i]));
@@ -51,25 +50,32 @@ public class Patzer{
             String move = "";
             move = AlphaBeta.findDecentMove(board,1);
             makeMove(move);
+            frame.repaint();
+            
+           
+            
+            
+            
             System.out.println("Move: " + move );
-            for(int i = 0; i < board.length; i++){
-                System.out.println(Arrays.toString(board[i]));
-            }
+            //for(int i = 0; i < board.length; i++){
+                //System.out.println(Arrays.toString(board[i]));
+            //}
             move = (AlphaBeta.findDecentMove(board,-1));
             makeMove(move);
+            frame.repaint();
+            
             System.out.println("Move: " + move);
-            for(int i = 0; i < board.length; i++){
-                System.out.println(Arrays.toString(board[i]));
-            }
-            String a = c.nextLine();
-            if(a.equals("1")){
-                break;
-            }
+            //for(int i = 0; i < board.length; i++){
+                //System.out.println(Arrays.toString(board[i]));
+            //}
+            
+            //if(a.equals("1")){
+              //  break;
+            //}
             
         }
+        //System.out.println("--------------------------------------------------------------------------"); 
 
-        //generateMoves("w", board);
-        System.out.println("--------------------------------------------------------------------------"); 
     }
     
     //returns a string of all the moves one color could make
@@ -139,6 +145,7 @@ public class Patzer{
                //System.out.println(newFile);
             board[newRank][newFile] = board[oldRank][oldFile];
             board[oldRank][oldFile] = " ";    
+           
         }
     }
     
